@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextSorter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h2>TextSorter</h2>
+        <textarea v-model="text" :readonly="sorting" rows="20" v-if="!sorting"></textarea>
+        <div>
+            <p class="sort" v-if="sorting"><span v-for="(t,i) in sarr" :class="diff[i]||hi.some(e=>e==i)?'di':''">{{t==" "?"&nbsp;":t=="\n"?"&nbsp;\n":t}}</span></p>
+        </div><button :disabled="!insorted" @click="insorted?(end()&&(insorted=false)):0">End</button><br>
+        frame:<select v-model="wait" class="ms">
+            <option value="0">0ms</option>
+            <option value="10">10ms</option>
+            <option value="50">50ms</option>
+            <option value="100">100ms</option>
+            <option value="500">500ms</option>
+            <option value="1000">1000ms</option>
+        </select><br>
+        <select size="7" v-model="selectalgo">
+            <option v-for="(d,i) in algokeys" :value="d">{{d}}Sort</option>
+        </select><br>
+        <button @click="start" :disabled="!(insorted||!sorting)">Start</button>
+        <ul>
+            <li v-for="d in debug">{{d}}</li>
+        </ul>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="script.js"></script>
+</body>
+</html>
