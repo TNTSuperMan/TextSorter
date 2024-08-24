@@ -112,7 +112,7 @@ const algo = {
             if (arr[i-1] > arr[i])await moveBack(i);
         }
     },
-    async Quick(){
+    async LLQuick(){
         let arr = ORGarr;
         let stack = [[0, arr.length - 1]];
         const part = async(low, high)=>{
@@ -136,6 +136,40 @@ const algo = {
                 let p = await part(start, end);
                 stack.push([p + 1, end]);
                 stack.push([start, p - 1]);
+            }
+        }
+    },
+    async LRQuick(){
+        let arr = ORGarr;
+        let stack = [[0, arr.length - 1]];
+        const part = async(low, high)=>{
+            let pivot = arr[high];
+            let left = low;
+            let right = high
+            while(true){
+                while(arr[left] < pivot) left++
+                while(pivot < arr[right])right--
+                app.hi = [left,right,low,high]
+                if(right <= left){
+                    break;
+                }
+                [arr[left],arr[right]] = [arr[right],arr[left]]
+                left++
+                right--
+                app.arr = arr
+                await frame()
+            }
+            
+            return [left,right]
+        }
+        while (stack.length) {
+            let [start, end] = stack.pop();
+            let p = await part(start, end);
+            if (p[1] < end) {
+                stack.push([p[1]+1,end]);
+            }
+            if (start < p[0]-1) {
+                stack.push([start, p[0] - 1]);
             }
         }
     },
@@ -245,6 +279,24 @@ const algo = {
             }
         }
     },
+    async Scramble(){
+        let arr = ORGarr
+        let scr = []
+        for(let i = 0;i < arr.length;i++) scr.push(i)
+        while(scr.length != 0){
+            let i = scr[Math.floor(Math.random() * (scr.length - 1))]
+            scr.splice(scr.indexOf(i),1)
+            let j = scr[Math.floor(Math.random() * (scr.length - 1))]
+            scr.splice(scr.indexOf(j),1)
+
+            let tmp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = tmp
+            app.arr = arr
+            console.log(scr)
+            await frame();
+        }
+    }
 }
 let ORGarr = []
 const app = Vue.createApp({
