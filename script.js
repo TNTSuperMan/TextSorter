@@ -252,51 +252,6 @@ const algo = {
             await heapify(i, 0)
         }
     },
-    async Quick_fast_(){
-        let arr = ORGarr;
-        let stack = [[0, arr.length - 1]];
-        const part = async(low, high)=>{
-            let pivot = arr[high];
-            let i = low - 1;
-            for (let j = low; j < high; j++) {
-                app.hi = [j,low,high]
-                if (arr[j] <= pivot) {
-                    i++;
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                    app.arr = arr;
-                }
-            }
-            await frame();
-            [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-            return i + 1;
-        }
-        while (stack.length) {
-            let [start, end] = stack.pop();
-            if (start < end) {
-                let p = await part(start, end);
-                stack.push([p + 1, end]);
-                stack.push([start, p - 1]);
-            }
-        }
-    },
-    async Scramble(){
-        let arr = ORGarr
-        let scr = []
-        for(let i = 0;i < arr.length;i++) scr.push(i)
-        while(scr.length != 0){
-            let i = scr[Math.floor(Math.random() * (scr.length - 1))]
-            scr.splice(scr.indexOf(i),1)
-            let j = scr[Math.floor(Math.random() * (scr.length - 1))]
-            scr.splice(scr.indexOf(j),1)
-
-            let tmp = arr[i]
-            arr[i] = arr[j]
-            arr[j] = tmp
-            app.arr = arr
-            console.log(scr)
-            await frame();
-        }
-    }
 }
 let ORGarr = []
 const app = Vue.createApp({
